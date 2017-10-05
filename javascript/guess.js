@@ -12,7 +12,7 @@ var guessedLetters;
 
 
 //var for the letter guessed
-var playerGuess = [];
+var playerGuess = document.getElementById('playerGuess');
 
 
 //var for computer letter choice 
@@ -28,6 +28,7 @@ console.log(cpuLetter);
 
 document.onkeyup = function(event) {
 var playerGuess = event.key;
+
 
 if(playerGuess === cpuLetter) {
 	gameWins++;
@@ -46,14 +47,16 @@ if(guessesRemain === 0) {
 function event() {
 	}
 
-document.getElementById('playerGuess').innerHTML = "Can you guess the letter? " + playerGuess;
+document.getElementById('playerGuess').innerHTML = playerGuess;
 
 
-document.getElementById('gameWins').innerHTML = "Wins: " + gameWins;
+document.getElementById('gameWins').innerHTML = gameWins;
 
-document.getElementById('gameLosses').innerHTML = "Losses: " + gameLosses;
+document.getElementById('gameLosses').innerHTML = gameLosses;
 
-document.getElementById('guessesRemain').innerHTML = "Guesses Remaining: " + guessesRemain;
+document.getElementById('guessesRemain').innerHTML = guessesRemain;
+
+document.getElementById('guessedLetters').innerHTML = guessesSoFar;
 
 
 // var alphbetLength = alphabet.length;
