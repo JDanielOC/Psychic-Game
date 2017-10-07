@@ -1,13 +1,12 @@
 /* ISSUES
-	guessesRemain does not reset. for loop with break for when/if correct answer is given
-	playerGuess should also clear at this point.
-	playerGuess does not append... DOM appendChild()?
+	guessesRemain does not reset. (if else analysis)  for loop with break for when/if correct answer is given
+	playerGuess should also clear at this point. FIXED: add multiple elses depending on if to effect game play (guessesRemain resets if game win AND if you run out of guesses.)
+	playerGuess does not append... DOM appendChild()? FIXED: .join(', ');
 	I think I'm close here.
+    TWO more issues: 
+    cpuLetter does not re-choose a random letter when game is won or lost.
+    alert if key pressed is not in the alphabet array.
 */
-
-
-
-
 
 //var for all letters in the alphabet
 
@@ -20,13 +19,12 @@ var alphabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m",
 var gameWins = 0;
 var gameLosses = 0;
 var guessesRemain = 10;
-var guessedElem = [];
+var guessedLetters = [];
 
-//var for computer letter choice 
-//define length of alphabet
-var alphbetLength = alphabet.length;
+/*var for computer letter choice 
+choose a random letter from the length*/
+var alphabetLength = alphabet.length;
 
-//choose a random letter from the length
 var cpuLetter = alphabet[Math.floor(Math.random() * alphabet.length)];
 
 //show what letter was chosen by computer in console
@@ -36,30 +34,42 @@ console.log(cpuLetter);
 document.onkeyup = function(event) {
 
     //determine which key was chosen
-    var playerGuess = event.key;
-    guessedElem.innerHTML = playerGuess;
-
-
+    var guess = event.key;
+    //guessedLetters.innerHTML = guess;
+        guessedLetters.push(guess);
 
     //apply game rules
-    if (playerGuess === cpuLetter) {
-        gameWins++;
+    if (guess === cpuLetter) {
+        gameWins++, 
+        guessesRemain = 10, 
+        guessedLetters = [], 
+        cpuLetter = alphabet[Math.floor(Math.random() * alphabet.length)]
+        console.log(cpuLetter);
 
     } else {
         guessesRemain--;
     }
 
     if (guessesRemain === 0) {
-        gameLosses++;
+        gameLosses++, 
+        guessesRemain = 10, 
+        guessedLetters = [], 
+        cpuLetter = alphabet[Math.floor(Math.random() * alphabet.length)]
+        console.log(cpuLetter);
     }
 
-
+    if (guessedLetters !== alphabet[]) {
+        alert("Invalid Entry. Try a letter.")
+    }
+    
+    // if (userInput === questionsArray[questionIndex][1]) {
+    
+    //         alert("Correct!");
+    //         score++;
+    //         updateScore();
+    //       }
 
     //getElementbyID + innerHTML for html to show guesses/wins/losses/remainder
-
-    // function event() {}
-
-    // document.getElementById('playerGuess').innerHTML = playerGuess;
 
 
     document.getElementById('gameWins').innerHTML = gameWins;
@@ -68,11 +78,6 @@ document.onkeyup = function(event) {
 
     document.getElementById('guessesRemain').innerHTML = guessesRemain;
 
-    document.getElementById('guessedLetters').innerHTML = guessesSoFar;
-
-
-    // var alphbetLength = alphabet.length;
-
-    // for (i = 0; i < alphabet.length; i++) {
+    document.getElementById('playerGuess').innerHTML = guessedLetters.join(', ');
 
 };
