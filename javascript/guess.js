@@ -58,7 +58,7 @@ document.onkeyup = function(event) {
         console.log(cpuLetter);
     }
 
-    if (guessedLetters !== alphabet[]) {
+    if (guessedLetters !== alphabet) {
         alert("Invalid Entry. Try a letter.")
     }
     
