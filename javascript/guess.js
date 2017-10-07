@@ -2,10 +2,12 @@
 	guessesRemain does not reset. (if else analysis)  for loop with break for when/if correct answer is given
 	playerGuess should also clear at this point. FIXED: add multiple elses depending on if to effect game play (guessesRemain resets if game win AND if you run out of guesses.)
 	playerGuess does not append... DOM appendChild()? FIXED: .join(', ');
+    cpuLetter does not re-choose a random letter when game is won or lost. FIXED.
 	I think I'm close here.
-    TWO more issues: 
-    cpuLetter does not re-choose a random letter when game is won or lost.
+    One more issue: 
     alert if key pressed is not in the alphabet array.
+    And another:
+    if gameWins is 5 reset game/if gameLosses is 5 reset game both with alerts. Seems to go to 5, require a key event and then alerts. need it to perform the alert before the key event.
 */
 
 //var for all letters in the alphabet
@@ -39,6 +41,29 @@ document.onkeyup = function(event) {
         guessedLetters.push(guess);
 
     //apply game rules
+
+    // if (gameWins === 5) {
+    //     alert("You Win! Success."),
+    //     gameWins = 0,
+    //     gameLosses = 0,
+    //     guessesRemain = 10, 
+    //     guessedLetters = [], 
+    //     cpuLetter = alphabet[Math.floor(Math.random() * alphabet.length)]
+    //     console.log(cpuLetter);
+
+    // }
+
+    // if (gameLosses === 5) {
+    //     alert("CPU Wins! Agony."),
+    //     gameWins = 0,
+    //     gameLosses = 0,
+    //     guessesRemain = 10, 
+    //     guessedLetters = [], 
+    //     cpuLetter = alphabet[Math.floor(Math.random() * alphabet.length)]
+    //     console.log(cpuLetter);
+
+    // }
+
     if (guess === cpuLetter) {
         gameWins++, 
         guessesRemain = 10, 
@@ -58,16 +83,11 @@ document.onkeyup = function(event) {
         console.log(cpuLetter);
     }
 
-    if (guessedLetters !== alphabet) {
-        alert("Invalid Entry. Try a letter.")
-    }
+    // if (guess !== alphabet[i]) {
+    //     alert("Invalid Entry. Try a letter.")
+    // }
     
-    // if (userInput === questionsArray[questionIndex][1]) {
-    
-    //         alert("Correct!");
-    //         score++;
-    //         updateScore();
-    //       }
+
 
     //getElementbyID + innerHTML for html to show guesses/wins/losses/remainder
 
