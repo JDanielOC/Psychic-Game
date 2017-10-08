@@ -4,19 +4,19 @@
      - playerGuess does not append... DOM appendChild()? FIXED: .join(', ');
      - cpuLetter does not re-choose a random letter when game is won or lost. FIXED: tell the computer to choose a random letter in the if/else statements.
     I think I'm close here.
-     - One more issue: 
+    if gameWins is 5 reset game/if gameLosses is 5 reset game both with alerts. 
+    Seems to go to 5, require a key event and then alerts. need it to perform the alert before the key event.
+    FIXED: it all came down to the order of the if/else statements. 
+
+         - One more issue: 
     alert if key pressed is not in the alphabet array.
-     - And another:
-    if gameWins is 5 reset game/if gameLosses is 5 reset game both with alerts. Seems to go to 5, require a key event and then alerts. need it to perform the alert before the key event.
 */
 
 //var for all letters in the alphabet
 
 var alphabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
 
-
 //var for wins, losses, remaining guesses
-
 
 var gameWins = 0;
 var gameLosses = 0;
@@ -25,7 +25,6 @@ var guessedLetters = [];
 
 /*var for computer letter choice 
 choose a random letter from the length*/
-
 
 var letterGetter = function() {
     return alphabet[Math.floor(Math.random() * alphabet.length)];
@@ -38,14 +37,11 @@ console.log(cpuLetter);
 //player guesses by pressing a key - onkeyup
 document.onkeyup = function(event) {
 
-    //determine which key was chosen
+//determine which key was chosen
     var guess = event.key;
-    //guessedLetters.innerHTML = guess;
     guessedLetters.push(guess);
 
-
-
-    //apply game logic ---found out order of operations is very important here. wins and losses would not work if they were placed before guess logic.
+//apply game logic ---found out order of operations is very important here. wins and losses would not work if they were placed before guess logic.
 
     if (guess === cpuLetter) {
         gameWins++;
@@ -66,14 +62,14 @@ document.onkeyup = function(event) {
         console.log(cpuLetter);
     }
 
-        if (gameWins === 5) {
+    if (gameWins === 5) {
         alert("You Win! Success.");
-             gameWins = 0;
-            gameLosses = 0,
-            guessesRemain = 10, 
-            guessedLetters = [], 
-            cpuLetter = alphabet[Math.floor(Math.random() * alphabet.length)]
-            console.log(cpuLetter);
+        gameWins = 0;
+        gameLosses = 0,
+        guessesRemain = 10,
+        guessedLetters = [],
+        cpuLetter = alphabet[Math.floor(Math.random() * alphabet.length)]
+        console.log(cpuLetter);
 
     }
 
@@ -81,15 +77,14 @@ document.onkeyup = function(event) {
         alert("CPU Wins! The agony of defeat."),
         gameWins = 0,
         gameLosses = 0,
-        guessesRemain = 10, 
-        guessedLetters = [], 
+        guessesRemain = 10,
+        guessedLetters = [],
         cpuLetter = alphabet[Math.floor(Math.random() * alphabet.length)]
         console.log(cpuLetter);
 
     }
 
-
-    //getElementbyID + innerHTML for html to show guesses/wins/losses/remainder
+//getElementbyID + innerHTML for html to show guesses/wins/losses/remainder
 
 
     document.getElementById('gameWins').innerHTML = gameWins;
