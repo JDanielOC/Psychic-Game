@@ -7,9 +7,8 @@
     if gameWins is 5 reset game/if gameLosses is 5 reset game both with alerts. 
     Seems to go to 5, require a key event and then alerts. need it to perform the alert before the key event.
     FIXED: it all came down to the order of the if/else statements. 
-
-         - One more issue: 
-    alert if key pressed is not in the alphabet array.
+    alert if key pressed is not in the alphabet array. FIXED: convoluted solution using indexOf that makes sense in most ways, but
+    i'd like to master this logic.
 */
 
 //var for all letters in the alphabet
@@ -22,6 +21,8 @@ var gameWins = 0;
 var gameLosses = 0;
 var guessesRemain = 10;
 var guessedLetters = [];
+var guess = null;
+
 
 /*var for computer letter choice 
 choose a random letter from the length*/
@@ -37,11 +38,18 @@ console.log(cpuLetter);
 //player guesses by pressing a key - onkeyup
 document.onkeyup = function(event) {
 
-//determine which key was chosen
-    var guess = event.key;
-    guessedLetters.push(guess);
+    var guess = String.fromCharCode(event.keyCode).toLowerCase();
 
-//apply game logic ---found out order of operations is very important here. wins and losses would not work if they were placed before guess logic.
+    if (guessedLetters.indexOf(guess) < 0 && alphabet.indexOf(guess) >= 0) {
+        guessedLetters[guessedLetters.length] = guess;
+        // if it is a new letter then decrease remaining guesses by 1
+        guessesRemain--;
+    } else {
+        alert("Your powers are disappointing. Choose a letter and choose one you haven't chosen.")
+
+    }
+
+    //apply game logic ---found out order of operations is very important here. wins and losses would not work if they were placed before guess logic.
 
     if (guess === cpuLetter) {
         gameWins++;
@@ -50,8 +58,6 @@ document.onkeyup = function(event) {
         cpuLetter = alphabet[Math.floor(Math.random() * alphabet.length)];
         console.log(cpuLetter);
 
-    } else {
-        guessesRemain--;
     }
 
     if (guessesRemain === 0) {
@@ -63,28 +69,28 @@ document.onkeyup = function(event) {
     }
 
     if (gameWins === 5) {
-        alert("You Win! Success.");
+        alert("You Win! My powers have made your success possible.");
         gameWins = 0;
-        gameLosses = 0,
-        guessesRemain = 10,
-        guessedLetters = [],
-        cpuLetter = alphabet[Math.floor(Math.random() * alphabet.length)]
+        gameLosses = 0;
+        guessesRemain = 10;
+        guessedLetters = [];
+        cpuLetter = alphabet[Math.floor(Math.random() * alphabet.length)];
         console.log(cpuLetter);
 
     }
 
     if (gameLosses === 5) {
-        alert("CPU Wins! The agony of defeat."),
-        gameWins = 0,
-        gameLosses = 0,
-        guessesRemain = 10,
-        guessedLetters = [],
-        cpuLetter = alphabet[Math.floor(Math.random() * alphabet.length)]
+        alert("Unfortunate. Try again, if you must."),
+            gameWins = 0;
+        gameLosses = 0;
+        guessesRemain = 10;
+        guessedLetters = [];
+        cpuLetter = alphabet[Math.floor(Math.random() * alphabet.length)];
         console.log(cpuLetter);
 
     }
 
-//getElementbyID + innerHTML for html to show guesses/wins/losses/remainder
+    //getElementbyID + innerHTML for html to show guesses/wins/losses/remainder
 
 
     document.getElementById('gameWins').innerHTML = gameWins;
